@@ -1,7 +1,7 @@
 import os
 import config
-from crm.save_client import save_client
 from datetime import datetime
+from crm.save_client_db import save_client
 
 print("=== Fluxways Solutions ===")
 
@@ -18,6 +18,7 @@ proposal_id = "FLX-" + datetime.now().strftime("%Y%m%d%H%M%S")
 
 # Current Date
 date_created = datetime.now().strftime("%d-%m-%Y")
+
 proposal = f"""
 =================================
 FLUXWAYS SOLUTIONS PROPOSAL
@@ -50,13 +51,15 @@ with open(filename, "w") as file:
 
 print(f"Proposal saved successfully as: {filename}")
 
-# Save client to CRM
+# Save client to SQLite
 save_client(
     name,
     company,
     service,
     package,
-    price
+    price,
+    proposal_id,
+    "New",
+    date_created
 )
 
-print("Client saved to CRM successfully!")
