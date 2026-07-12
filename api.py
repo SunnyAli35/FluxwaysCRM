@@ -62,6 +62,29 @@ def create_client(client: Client):
 
     return {"id": new_id, **client.dict()}
 
+@app.put("/clients/{client_id}")
+def update_client(client_id: int, client: Client):
+    conn = sqlite3.connect("data/fluxways_crm.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT id FROM clients WHERE id = ?", (client_id,))
+    existing = cursor.fetchone()
+
+    if not existing:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Client not found")
+
+    cursor.execute("""
+        UPDATE clients
+        SET name = ?, company = ?, service = ?, package = ?, price = ?, status = ?
+        WHERE id = ?
+    """, (client.name, client.company, client.service, client.package, client.price, client.status, client_id))
+
+    conn.commit()
+    conn.close()
+
+    return {"id": client_id, **client.dict()}
+
 @app.delete("/clients/{client_id}")
 def delete_client(client_id: int):
     conn = sqlite3.connect("data/fluxways_crm.db")
