@@ -2,7 +2,12 @@ _pycache_/
 *.pyc
 *.pyo
 .env
+.venv/
 venv/
 *.db
+*.sqlite
 *.sqlite3
+.DS_Store
+Thumbs.db
 .vscode/
+.idea/
