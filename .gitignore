@@ -4,10 +4,8 @@ _pycache_/
 .env
 .venv/
 venv/
-*.db
+.db
 *.sqlite
 *.sqlite3
-.DS_Store
-Thumbs.db
 .vscode/
 .idea/
